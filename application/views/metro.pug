@@ -1,0 +1,31 @@
+html
+  head
+    link(rel='stylesheet' href='/static/metro.css')
+    link(rel='stylesheet' href='/static/page.css')
+
+  body
+    mixin header(logo)
+      div.header
+        div.left
+          h2 S. #{circular}/#{year}
+        if logo
+          div.middle
+            img(src='/static/metro.png')
+        div.right
+          h2 S. #{circular}/#{year}
+    page
+      +header(true)
+      div.contact
+        span Operational Planning
+        span Level 2, 595 Collins Street
+        span Phone: 14688
+      div.title
+        h2 #{lore.title}
+      div.lore
+        p #{lore.lore}
+          if lore.nonRevenue
+            span.bold  This train is NOT to delay any revenue services.
+        p.bold Consist: #{lore.consist}
+    page
+      +header(false)
+      p &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Damn you thought this was real eh
