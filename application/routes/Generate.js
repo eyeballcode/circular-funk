@@ -122,8 +122,8 @@ let metroLores = [{
   consist: '#{diesel_loco_a}, IEV 102, #{diesel_loco_b} (push/pull)',
   nonRevenue: true
 }, {
-  title: '#{diesel_loco_a} "The Merndasider" Heritage Run to Mernda',
-  lore: 'V/Line Victoria will be operating a heritage train to Mernda as part of it\'s celebrations of #{diesel_loco_a}\'s birthday. As part of the tour, #{diesel_loco_a} will visit various locations along the Mernda line, including Clifton Hill, Reservoir, Epping, South Morang and Mernda. The train will also visit Hurstbridge as part of its tour. This heritage train will be filled with foamers and twelvies to raise revenue.',
+  title: '#{diesel_loco_a} "The #{line_a}sider" Heritage Run to #{line_a}',
+  lore: 'V/Line Victoria will be operating a heritage train to #{line_a} on #{future_day} as part of it\'s celebrations of #{diesel_loco_a}\'s birthday. As part of the tour, #{diesel_loco_a} will visit various locations along the #{line_a} line. The train will also visit #{line_b} and #{line_c} as part of its tour. This heritage train will be filled with foamers and twelvies to raise revenue.',
   consist: '#{diesel_loco_a}, BTH162, BH149, BIH184, BH142, BIH182, BCH122',
   nonRevenue: true
 }, {
