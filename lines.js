@@ -398,5 +398,27 @@ module.exports = {
     'Newmarket',
     'Showgrounds',
     'Flemington Racecourse'
+  ],
+  Newport: [
+    'Flinders Street',
+    'Southern Cross',
+    'North Melbourne',
+    'South Kensington',
+    'Footscray',
+    'Seddon',
+    'Yarraville',
+    'Spotswood',
+    'Newport'
+  ],
+  'Melbourne Yard': [
+    'Flinders Street',
+    'Southern Cross',
+    'Melbourne Yard Stabling Sidings'
+  ],
+  'South Dynon Loco': [
+    'South Dynon',
+    'West Tower',
+    'Southern Cross',
+    'Flinders Street'
   ]
 }

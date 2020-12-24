@@ -32,16 +32,18 @@ html
             span.bold  This train is NOT to delay any revenue services.
         p.bold Consist: #{lore.consist}
         p.bold Driver/Operations: Raymond O’Flaherty (0420 690 123)
+        h1 #{title}
+        h2.date #{`${lore.date.format('dddd Do MMMM YYYY')}`.toUpperCase()}
       div.times
         table
           tbody
             for line in pages[0]
               tr(class=line.class)
                 | !{line.html}
-      if pages.length === 1 && pages[0].length < 24
+      if pages.length === 1 && pages[0].length < firstPageSize - 3
         +ack()
         
-    if pages.length === 1 && pages[0].length >= 24
+    if pages.length === 1 && pages[0].length >= firstPageSize - 3
       page
         +header(false)
         +ack()
@@ -56,10 +58,10 @@ html
                 tr(class=line.class)
                   | !{line.html}
 
-        if i === pages.length - 2 && page.length < 41
+        if i === pages.length - 2 && page.length < nextPageSize - 3
           +ack()
 
-    if pages.length > 1 && pages[pages.length - 1].length >= 41
+    if pages.length > 1 && pages[pages.length - 1].length >= nextPageSize - 3
       page
         +header(false)
         +ack()

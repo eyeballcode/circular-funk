@@ -62,21 +62,43 @@ div.contact {
 }
 
 div.title {
+  display: flex;
+  justify-content: center;
   text-align: center;
   text-decoration: underline;
+}
+
+div.title h2 {
+  width: 18cm;
 }
 
 div.lore {
   display: flex;
   align-items: center;
   flex-direction: column;
-  height: 5cm;
 }
 
 div.lore p {
   margin-top: 0;
   width: 18cm;
   text-align: justify;
+}
+
+div.lore h2.date, div.lore h1 {
+  margin: 0;
+  text-decoration: underline;
+  width: 19cm;
+  text-align: center;
+}
+
+div.lore h1 {
+  font-size: 0.7cm;
+  text-align: center;
+}
+
+div.lore h2.date {
+  margin-top: 0.15cm;
+  margin-bottom: 0.2cm;
 }
 
 div.times {

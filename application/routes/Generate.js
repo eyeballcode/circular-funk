@@ -126,7 +126,8 @@ function fillOut(lore) {
     title,
     lore: loreText,
     consist,
-    lines: linesAvailable
+    lines: linesAvailable,
+    date: futureDay
   }
 }
 
@@ -136,7 +137,8 @@ let metroLores = [{
   consist: '#{diesel_loco_a}, IEV 102, #{diesel_loco_b} (push/pull)',
   nonRevenue: true,
   times: ['a.down', 'a.up'],
-  tdnRange: 7000
+  tdnRange: 7000,
+  stableAt: 'MYD'
 }, {
   title: '#{diesel_loco_a} "The #{line_a}sider" Heritage Run to #{line_a}',
   lore: 'V/Line Victoria will be operating a heritage train to #{line_a} on #{future_day} as part of it\'s celebrations of #{diesel_loco_a}\'s birthday. As part of the tour, #{diesel_loco_a} will visit various locations along the #{line_a} line. The train will also visit #{line_b} and #{line_c} as part of its tour. This heritage train will be filled with foamers and twelvies to raise revenue.',
@@ -144,7 +146,8 @@ let metroLores = [{
   nonRevenue: true,
   starting: 'Down',
   times: ['a.down', 'a.up', 'b.down', 'b.up', 'c.down', 'c.up'],
-  tdnRange: 8000
+  tdnRange: 8000,
+  stableAt: 'NPT'
 }, {
   title: 'Introduction of HCMT to Revenue Services',
   lore: 'After months of extensive testing the Metro HCMT fleet has finally been approved for revenue service on the #{line_a} and #{line_b} lines. The HCMTs will be entering service on #{future_day}, running from #{line_a} to Flinders Street and return. The HCMT will run one (1) revenue trip before returning to the depot for a media briefing. Staff are to be stationed at the platform to clear out the train upon arrival.',
@@ -152,7 +155,8 @@ let metroLores = [{
   nonRevenue: false,
   starting: 'Up',
   times: ['a.up', 'a.down', 'a.up', 'a.down'],
-  tdnRange: 7000
+  tdnRange: 7000,
+  stableAt: null
 }, {
   title: 'Retirement run of Comeng Train to #{line_a}, #{line_b}, #{line_c} and #{line_d}.',
   lore: 'As the Comeng fleet approach 40 years old Fleet has started to retire the oldest units. To commemorate the many years of service these trains have run, Metro has organised a tour run throughout the suburban network. The tour will visit #{line_a}, #{line_b}, #{line_c} and #{line_d}.',
@@ -160,7 +164,8 @@ let metroLores = [{
   nonRevenue: true,
   starting: 'Up',
   times: ['a.down', 'a.up', 'b.down', 'b.up', 'c.down', 'c.up', 'd.down', 'd.up'],
-  tdnRange: 7000
+  tdnRange: 7000,
+  stableAt: 'MYD'
 }]
 
 function generateTimes(numberOfStops, startTimeMinutes) {
@@ -182,10 +187,27 @@ router.get('/', (req, res) => {
   let lore = fillOut(pickRandom(metroLores))
   let currentStart = Math.round(7 * 60 + Math.random() * 60)
 
+  let linesVisited = []
+
+  if (lore.stableAt === 'NPT') lore.times = ['Newport.up', ...lore.times, 'Newport.down']
+  if (lore.stableAt === 'MYD') lore.times = ['Melbourne Yard.up', ...lore.times, 'Melbourne Yard.down']
+  if (lore.stableAt === 'SDL') lore.times = ['South Dynon Loco.up', ...lore.times, 'South Dynon Loco.down']
+
   let trips = lore.times.map(trip => {
     let [lineCode, direction] = trip.split('.')
     let lineName = lore.lines[lineCode.charCodeAt(0) - 97]
+
+    let baseTDN = lore.tdnRange
+
+    if (lineCode.length > 1) lineName = lineCode
+
+    if (lineCode === 'Newport') baseTDN = 8000
+    if (lineCode === 'Melbourne Yard') baseTDN = 5000
+    if (lineCode === 'South Dynon Loco') baseTDN = 7000
+
     let lineStops = allLines[lineName].slice(0)
+
+    if (!linesVisited.includes(lineName)) linesVisited.push(lineName)
 
     let tripStops = lineStops
     if (direction === 'up') tripStops.reverse()
@@ -197,7 +219,7 @@ router.get('/', (req, res) => {
 
     currentStart = newStart
 
-    let tdn = lore.tdnRange + Math.round(Math.random() * 998)
+    let tdn = baseTDN + Math.round(Math.random() * 998)
     tdn -= tdn % 2
 
     if (direction === 'down') tdn++
@@ -213,6 +235,8 @@ router.get('/', (req, res) => {
       })
     }
   })
+
+  if (lore.stableAt) linesVisited.push(linesVisited[0])
 
   let lines = []
   trips.forEach(trip => {
@@ -231,22 +255,28 @@ router.get('/', (req, res) => {
     })
   })
 
-  let firstPageSize = 27
-  let nextPageSizes = 44
+  let firstPageSize = 23
+  let nextPageSize = 44
+
+  let title = linesVisited.join(' - ').toUpperCase().replace('RACECOURSE', 'RACES')
+  if (title.length > 44) firstPageSize = 22
 
   let page1 = lines.slice(0, firstPageSize)
   let remainingLines = lines.slice(firstPageSize)
   let pages = [page1]
 
-  for (let i = 0; i < remainingLines.length; i+= nextPageSizes) {
-    pages.push(remainingLines.slice(i, i + nextPageSizes))
+  for (let i = 0; i < remainingLines.length; i+= nextPageSize) {
+    pages.push(remainingLines.slice(i, i + nextPageSize))
   }
 
   res.render('metro', {
     circular: circularNumber,
     year: 20,
     lore,
-    pages
+    pages,
+    firstPageSize,
+    nextPageSize,
+    title
   })
 })
 
