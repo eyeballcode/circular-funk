@@ -22,10 +22,23 @@ html
       div.title
         h2 #{lore.title}
       div.lore
-        p #{lore.lore}
+        p.lore #{lore.lore}
           if lore.nonRevenue
             span.bold  This train is NOT to delay any revenue services.
         p.bold Consist: #{lore.consist}
-    page
-      +header(false)
-      p &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Damn you thought this was real eh
+        p.bold Driver/Operations: ABC DEFG (0420 690 123)
+      div.times
+        table
+          tbody
+            for line in pages[0]
+              tr(class=line.class)
+                | !{line.html}
+    for page in pages.slice(1)
+      page
+        +header(false)
+        div.times
+          table
+            tbody
+              for line in page
+                tr(class=line.class)
+                  | !{line.html}
