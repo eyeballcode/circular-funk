@@ -138,7 +138,7 @@ let metroLores = [{
   nonRevenue: true,
   times: ['a.down', 'a.up'],
   tdnRange: 7000,
-  stableAt: 'MYD'
+  stableAt: 'SDL'
 }, {
   title: '#{diesel_loco_a} "The #{line_a}sider" Heritage Run to #{line_a}',
   lore: 'V/Line Victoria will be operating a heritage train to #{line_a} on #{future_day} as part of it\'s celebrations of #{diesel_loco_a}\'s birthday. As part of the tour, #{diesel_loco_a} will visit various locations along the #{line_a} line. The train will also visit #{line_b} and #{line_c} as part of its tour. This heritage train will be filled with foamers and twelvies to raise revenue.',
