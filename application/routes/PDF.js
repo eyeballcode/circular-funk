@@ -5,15 +5,21 @@ const router = new express.Router()
 const config = require('../../config.json')
 
 router.get('/', async (req, res) => {
-  let browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']})
-  let page = await browser.newPage()
+  let browser
+  try {
+    browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']})
+    let page = await browser.newPage()
 
-  await page.goto('http://localhost:' + config.httpPort, { waitUntil: 'networkidle2' })
-  let buffer = await page.pdf({format: 'A4'})
-  await browser.close()
+    await page.goto('http://localhost:' + config.httpPort, { waitUntil: 'networkidle0' })
+    let buffer = await page.pdf({format: 'A4'})
 
-  res.header('Content-Type', 'application/pdf')
-  res.end(buffer)
+    res.header('Content-Type', 'application/pdf')
+    res.end(buffer)
+  } finally {
+    if (browser) {
+      await browser.close()
+    }
+  }
 })
 
 module.exports = router

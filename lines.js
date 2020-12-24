@@ -415,10 +415,37 @@ module.exports = {
     'Southern Cross',
     'Melbourne Yard Stabling Sidings'
   ],
-  'South Dynon Loco': [
-    'South Dynon',
-    'West Tower',
+  'South Dynon': [
+    'Flinders Street',
     'Southern Cross',
-    'Flinders Street'
-  ]
+    'West Tower',
+    'South Dynon'
+  ],
+  'Seymour': [
+    'Southern Cross',
+    'North Melbourne',
+    'Kensington',
+    'Newmarket',
+    'Ascot Vale',
+    'Moonee Ponds',
+    'Essendon',
+    'Glenbervie',
+    'Strathmore',
+    'Pascoe Vale',
+    'Oak Park',
+    'Glenroy',
+    'Jacana',
+    'Broadmeadows',
+    'Coolaroo',
+    'Roxburgh Park',
+    'Craigieburn',
+    'Donnybrook',
+    'Wallan',
+    'Heathcote Junction',
+    'Wandong',
+    'Kilmore East',
+    'Broadford',
+    'Tallarook',
+    'Seymour'
+  ],
 }
