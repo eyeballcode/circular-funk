@@ -19,6 +19,14 @@ div.header {
   width: 21cm;
 }
 
+div.header:not(.logo) {
+  padding-top: 0.8cm;
+}
+
+div.header h2 {
+  margin-top: 0;
+}
+
 div.header div.left, div.header div.right {
   width: 5cm;
 }
@@ -83,4 +91,22 @@ tr.tripHeader {
 
 div.times table tr td:nth-child(1) {
   width: 7cm;
+}
+
+div.ack {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 1cm;
+}
+
+div.ack p {
+  margin-top: 0;
+  width: 18cm;
+  text-align: justify;
+}
+
+div.ack h4 {
+  margin: 0;
+  width: 18cm;
 }

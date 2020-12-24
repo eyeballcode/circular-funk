@@ -47,6 +47,7 @@ module.exports = class MainServer {
 
   async configRoutes (app) {
     app.use('/', require('../application/routes/Generate'))
+    app.use('/pdf', require('../application/routes/PDF'))
 
     app.use('/500', (req, res) => { throw new Error('500') })
 

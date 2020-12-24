@@ -2,10 +2,10 @@ html
   head
     link(rel='stylesheet' href='/static/metro.css')
     link(rel='stylesheet' href='/static/page.css')
-
+    title S#{year}-#{circular}
   body
     mixin header(logo)
-      div.header
+      div(class=`header ${logo ? 'logo' : ''}`)
         div.left
           h2 S. #{circular}/#{year}
         if logo
@@ -13,6 +13,11 @@ html
             img(src='/static/metro.png')
         div.right
           h2 S. #{circular}/#{year}
+    mixin ack()
+      div.ack
+        p Appropriate Operations Division Managers are to arrange for necessary staff to be on duty to facilitate these arrangements. All concerned to note and arrange.
+        h4 Dan Andrews
+        h4 Premier
     page
       +header(true)
       div.contact
@@ -26,14 +31,22 @@ html
           if lore.nonRevenue
             span.bold  This train is NOT to delay any revenue services.
         p.bold Consist: #{lore.consist}
-        p.bold Driver/Operations: ABC DEFG (0420 690 123)
+        p.bold Driver/Operations: Raymond O’Flaherty (0420 690 123)
       div.times
         table
           tbody
             for line in pages[0]
               tr(class=line.class)
                 | !{line.html}
-    for page in pages.slice(1)
+      if pages.length === 1 && pages[0].length < 24
+        +ack()
+        
+    if pages.length === 1 && pages[0].length >= 24
+      page
+        +header(false)
+        +ack()
+
+    for page, i in pages.slice(1)
       page
         +header(false)
         div.times
@@ -42,3 +55,11 @@ html
               for line in page
                 tr(class=line.class)
                   | !{line.html}
+
+        if i === pages.length - 2 && page.length < 41
+          +ack()
+
+    if pages.length > 1 && pages[pages.length - 1].length >= 41
+      page
+        +header(false)
+        +ack()

@@ -153,6 +153,14 @@ let metroLores = [{
   starting: 'Up',
   times: ['a.up', 'a.down', 'a.up', 'a.down'],
   tdnRange: 7000
+}, {
+  title: 'Retirement run of Comeng Train to #{line_a}, #{line_b}, #{line_c} and #{line_d}.',
+  lore: 'As the Comeng fleet approach 40 years old Fleet has started to retire the oldest units. To commemorate the many years of service these trains have run, Metro has organised a tour run throughout the suburban network. The tour will visit #{line_a}, #{line_b}, #{line_c} and #{line_d}.',
+  consist: 'Any available Comeng train',
+  nonRevenue: true,
+  starting: 'Up',
+  times: ['a.down', 'a.up', 'b.down', 'b.up', 'c.down', 'c.up', 'd.down', 'd.up'],
+  tdnRange: 7000
 }]
 
 function generateTimes(numberOfStops, startTimeMinutes) {
@@ -210,12 +218,15 @@ router.get('/', (req, res) => {
   trips.forEach(trip => {
     lines.push({
       html: `<td>${trip.direction.toUpperCase()}</td><td>${trip.tdn}</td>`,
-      class: 'tripHeader'
+      class: 'tripHeader',
+      table: true
     })
+
     trip.times.forEach(stop => {
       lines.push({
         html: `<td>${stop.name}</td><td>${stop.time}</td>`,
-        class: ''
+        class: '',
+        table: true
       })
     })
   })
