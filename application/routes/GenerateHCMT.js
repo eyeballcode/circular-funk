@@ -44,7 +44,7 @@ router.get('/', async  (req, res) => {
   let writtenAt = moment().add(-31 + 7 * (Math.random() - 0.5), 'days')
   let startOfYear = writtenAt.clone().startOf('year')
   let dayCount = writtenAt.diff(startOfYear, 'days')
-  let year = writtenAt.get('year')
+  let year = writtenAt.get('year').toString().slice(-2)
 
   let circularNumber = Math.max(Math.ceil(9999 * dayCount / (365 * 2) + 100 * (Math.random() - 0.5)), 0)
 
