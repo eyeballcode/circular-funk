@@ -51,10 +51,11 @@ html
               - let stopType = index === 0 ? 'dep' : (index === maxIndex ? 'arr' : '')
               - let hasPlatform = showPlatform.includes(stopName)
               - let hasShownTrack = false
+              - let hasTrack = !!stopData[0].track
               
-              mixin track()
-                if stopData[0].track
-                  tr
+              mixin track(c)
+                if hasTrack
+                  tr(class=c)
                     td
                     td
                       for stop in stopData
@@ -69,16 +70,16 @@ html
 
               if trackBefore.includes(stopName) && dir === 'UP' || trackAfter.includes(stopName) && dir === 'DOWN'
                 - hasShownTrack = true
-                +track()
+                +track('')
 
-              tr(class=`left ${(hasLine && showBottomLine) ? 'greyBottom' : ''} ${(!hasPlatform) && hasLine && showTopLine ? 'greyTop' : ''}`)
+              tr(class=`left ${(hasLine && showBottomLine && !hasTrack) ? 'greyBottom' : ''} ${(!hasPlatform) && hasLine && showTopLine ? 'greyTop' : ''}`)
                 td(class=`left wide ${shouldBold ? 'bold' : ''}`) #{caps.includes(stopName) ? stopName.toUpperCase() : stopName}
                 td.stopType #{stopType}
                 for stop in stopData
                   td.greyLeft.timing #{stop.departureTime}#{stop.express ? '*' : ''}
                   
               if !hasShownTrack
-                +track()
+                +track((hasLine && showBottomLine) ? 'greyBottom' : '')
               
               - index++
               

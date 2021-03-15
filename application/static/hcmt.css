@@ -3,7 +3,7 @@
 }
 
 p, span {
-  font-size: 0.32cm;
+  font-size: 0.34cm;
   line-height: 0.55cm;
 }
 
@@ -122,7 +122,7 @@ div.lore p {
 }
 
 div.lore p * {
-  font-size: 0.34cm;
+  font-size: 0.345cm;
   line-height: 1.5;
 }
 
@@ -152,7 +152,7 @@ div.times h4 {
 
 div.times {
   width: 21cm;
-  font-size: 0.32cm;
+  font-size: 0.34cm;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -163,7 +163,7 @@ div.times table {
   border-top: 0.07cm solid #000000;
   border-bottom: 0.07cm solid #000000;
   border-collapse: collapse;
-  font-size: 0.32cm;
+  font-size: 0.34cm;
   line-height: 0.35cm;
 }
 

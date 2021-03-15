@@ -59,7 +59,7 @@ router.get('/', async  (req, res) => {
     dayNames = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY']
     let startOfWeek = intendedFor.clone().startOf('week')
     for (let i = 0; i < 5; i++) {
-      days.push(formatDate(startOfWeek.clone().add(i, 'days')))
+      days.push(formatDate(startOfWeek.clone().add(i + 1, 'days')))
     }
   }
 
