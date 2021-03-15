@@ -63,13 +63,17 @@ div.contact {
 
 div.title {
   display: flex;
+  align-items: center;
   justify-content: center;
   text-align: center;
   text-decoration: underline;
+  flex-direction: column;
 }
 
 div.title h2 {
-  width: 18cm;
+  width: 19cm;
+  margin-top: 0;
+  margin-bottom: 0.2cm
 }
 
 div.lore {

@@ -1,0 +1,222 @@
+* {
+  font-family: "Arial";
+}
+
+p, span {
+  font-size: 0.32cm;
+  line-height: 0.55cm;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+div.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 19cm;
+  padding-top: 0.7cm;
+  margin-left: 1cm;
+}
+
+div.header h2 {
+  margin-top: 0;
+  margin-bottom: 0.1cm;
+  font-size: 0.5cm;
+}
+
+div.header div.left, div.header div.right {
+  width: 5.5cm;
+}
+
+div.header div.left h2 {
+  margin-left: 0.5cm;
+  text-align: left;
+}
+
+div.header div.middle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 0.7cm;
+}
+
+div.header div.right h2 {
+  margin-right: 0.5cm;
+  text-align: right;
+}
+
+div.logo {
+  width: 21cm;
+}
+
+div.logo img {
+  width: 5cm;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+div.contact {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  width: 6cm;
+  margin-right: 1.5cm;
+  text-align: right;
+  margin-top: -1.3cm;
+}
+
+div.contact span {
+  font-size: 0.3cm;
+  line-height: 0.32cm;
+}
+
+div.title {
+  margin-top: 0.2cm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+div.title h2 {
+  width: 19cm;
+  margin-top: 0;
+  margin-bottom: 0cm;
+  font-size: 0.6cm;
+}
+
+table.operationDays {
+  width: 19cm;
+  margin-left: 1cm;
+  font-weight: bold;
+  text-align: center;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin-top: 0.1cm;
+  margin-bottom: 0.2cm;
+}
+
+table.operationDays td {
+  width: calc(19cm / 5);
+  border: 0.03cm solid #000000;
+  box-sizing: border-box;
+  font-size: 0.45cm;
+  line-height: 0.9;
+}
+
+div.lore {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+div.lore p {
+  margin-top: 0;
+  margin-bottom: 0.1cm;
+  width: 18cm;
+}
+
+div.lore p * {
+  font-size: 0.34cm;
+  line-height: 1.5;
+}
+
+div.lore p.betterHeight * {
+  line-height: 1.7;
+}
+
+div.lore p.centre {
+  text-align: center;
+}
+
+div.lore span.bold {
+  font-weight: bold;
+}
+
+div.lore span.highlight {
+  background-color: yellow;
+}
+
+div.lore span.underline {
+  text-decoration: underline;
+}
+
+div.times h4 {
+  margin-bottom: 0;
+}
+
+div.times {
+  width: 21cm;
+  font-size: 0.32cm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+div.times table {
+  border-top: 0.07cm solid #000000;
+  border-bottom: 0.07cm solid #000000;
+  border-collapse: collapse;
+  font-size: 0.32cm;
+  line-height: 0.35cm;
+}
+
+div.times table td {
+  vertical-align: top;
+  text-align: center;
+}
+
+div.times table .left {
+  text-align: left !important;
+}
+
+td.greyBottom, tr.greyBottom td {
+  border-bottom: 0.05cm solid #a0a0a0;
+}
+
+td.greyTop, tr.greyTop td {
+  border-top: 0.05cm solid #a0a0a0;
+}
+
+td.greyLeft {
+  border-left: 0.05cm solid #a0a0a0;
+}
+
+div.times td.wide {
+  width: 3.5cm;
+}
+
+div.times td.stopType {
+  width: 1cm;
+  text-align: left;
+}
+
+div.times td.timing {
+  padding-left: 0.1cm;
+  padding-right: 0.1cm;
+}
+
+div.ack {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 0.5cm;
+}
+
+div.ack p {
+  margin-top: 0;
+  width: 18cm;
+  text-align: justify;
+  font-size: 0.34cm;
+}
+
+div.ack h4 {
+  margin: 0;
+  width: 18cm;
+}

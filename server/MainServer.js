@@ -47,6 +47,7 @@ module.exports = class MainServer {
 
   async configRoutes (app) {
     app.use('/', require('../application/routes/Generate'))
+    app.use('/hcmt', require('../application/routes/GenerateHCMT'))
     app.use('/pdf', require('../application/routes/PDF'))
 
     app.use('/500', (req, res) => { throw new Error('500') })
@@ -57,9 +58,11 @@ module.exports = class MainServer {
 
     app.use((err, req, res, next) => {
       if (err.message === '404') {
-        res.status(404).render('errors/404')
+        res.status(400).end('404')
+        // res.status(404).render('errors/404')
       } else {
-        res.status(500).render('errors/500')
+        res.status(500).end('500')
+        // res.status(500).render('errors/500')
         console.log(req.url, err)
       }
     })

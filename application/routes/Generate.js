@@ -422,7 +422,7 @@ router.get('/', (req, res) => {
   })
 
   let firstPageSize = 23
-  let nextPageSize = 44
+  let nextPageSize = 43
 
   let title = linesVisited.join(' - ').toUpperCase().replace('RACECOURSE', 'RACES')
   if (title.length > 44) firstPageSize = 22

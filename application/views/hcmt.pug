@@ -1,0 +1,150 @@
+html
+  head
+    link(rel='stylesheet' href='/static/hcmt.css')
+    link(rel='stylesheet' href='/static/page.css')
+    title S#{year}-#{circular}
+  body
+    mixin header(logo)
+      div.header
+        div.left
+          h2 S.#{circular}/#{year}
+        div.right
+          h2 S.#{circular}/#{year}
+          
+      if logo
+        div.logo
+          img(src='/static/metro.png')
+    - let showPlatform = ['Pakenham East', 'Pakenham', 'Dandenong', 'Westall', 'Caulfield', 'Flinders Street']
+    - let bolded = ['Pakenham', 'Dandenong', 'Caulfield', 'Richmond', 'Flinders Street']
+    - let caps = ['Pakenham', 'Flinders Street']
+    - let lineTop = ['Dandenong', 'Parliament']
+    - let lineSurround = ['Caulfield']
+    - let trackBefore = ['Pakenham']
+    - let trackAfter = ['Richmond', 'Richmond Junction']
+    
+    mixin times(name, dir, trips, stopNames)
+      div.times
+        h4 #{name}
+        table
+          tbody
+            tr
+              td(colspan='2').greyBottom.left Formed By On Arrival
+              for trip in trips
+                td.greyBottom.greyLeft !{trip.formedBy}
+            tr
+              td(colspan='2' rowspan='2').bold.greyBottom #{dir}
+              for trip in trips
+                td.bold.greyBottom.greyLeft !{trip.runID}
+            tr
+              for trip in trips
+                td.greyBottom.greyLeft Elec.
+            
+            - let index = 0, maxIndex = stopNames.length - 1
+            for stopName in stopNames
+              - let fullName = stopName + ' Railway Station'
+              - let stopData = trips.map(trip => trip.stopTimings.find(stop => stop.stopName === fullName))
+              - let shouldBold = bolded.includes(stopName)
+              - let surroundingLine = lineSurround.includes(stopName)
+              - let hasLine = lineTop.includes(stopName) || surroundingLine
+              - let showTopLine = dir === 'UP' || surroundingLine, showBottomLine = dir === 'DOWN' || surroundingLine
+              - if (stopName === 'Flinders Street') { hasLine = true; showTopLine = false; showBottomLine = true }
+              - let stopType = index === 0 ? 'dep' : (index === maxIndex ? 'arr' : '')
+              - let hasPlatform = showPlatform.includes(stopName)
+              - let hasShownTrack = false
+              
+              mixin track()
+                if stopData[0].track
+                  tr
+                    td
+                    td
+                      for stop in stopData
+                        td.greyLeft #{stop.track}
+                        
+              if hasPlatform
+                tr(class=`left ${(hasLine && showTopLine) ? 'greyTop' : ''}`)
+                  td(class=`left wide ${shouldBold ? 'bold' : ''}`) Platform No.
+                  td
+                  for stop in stopData
+                    td.greyLeft #{isNaN(stop.platform) ? '' : 'PL'} #{stop.platform}
+
+              if trackBefore.includes(stopName) && dir === 'UP' || trackAfter.includes(stopName) && dir === 'DOWN'
+                - hasShownTrack = true
+                +track()
+
+              tr(class=`left ${(hasLine && showBottomLine) ? 'greyBottom' : ''} ${(!hasPlatform) && hasLine && showTopLine ? 'greyTop' : ''}`)
+                td(class=`left wide ${shouldBold ? 'bold' : ''}`) #{caps.includes(stopName) ? stopName.toUpperCase() : stopName}
+                td.stopType #{stopType}
+                for stop in stopData
+                  td.greyLeft.timing #{stop.departureTime}#{stop.express ? '*' : ''}
+                  
+              if !hasShownTrack
+                +track()
+              
+              - index++
+              
+            tr
+              td(colspan='2').greyBottom.greyTop.left Forms
+              for trip in trips
+                td.greyBottom.greyLeft.greyTop !{trip.forms}
+
+              
+              
+    page
+      +header(true)
+      div.contact
+        span Operational Planning
+        span Level 3, 595 Collins Street
+        span Melbourne, Victoria
+        span ☎ 14688 Dan Andrews
+        span #{writtenAt.format('dddd, DD MMMM YY')}
+      div.title
+        h2 HCMT DRIVER TRAINING / REVENUE RUNS
+        h2 PAKENHAM EAST – FLINDERS STREET – PAKENHAM EAST
+      table.operationDays
+        tr
+          for dayName in dayNames
+            td #{dayName}
+        tr
+          for day in days
+            td #{day}
+      div.lore
+        p.lore
+          span In connection with the above, 
+          span.bold 1 HCMT train 
+          span is required for Driver Training for the above dates. 
+          span.bold.highlight Fleet controllers are to ensure that the appropriate consists are in position. 
+          span Should the circular not be required on any of the dates, 
+          span.bold it is the responsibility of the appropriate train services personnel to inform Fleet Control / Metrol prior to the operation of this circular.
+        p.lore.centre
+          span.bold.highlight.underline PLEASE NOTE:
+          span.bold.highlight  HCMT project drivers will operate the following trips.
+      +times('PAKENHAM EAST - FLINDERS STREET', 'UP', trips.upTrips, trips.upStopNames)
+    page
+      +header(false)
+      +times('FLINDERS STREET - PAKENHAM EAST', 'DOWN', trips.downTrips, trips.downStopNames)
+      
+      br
+      br
+
+      div.lore
+        p.lore.centre
+          span.bold.highlight Meal break as required at Pakenham East
+          
+        p.lore.betterHeight
+          span.bold.underline ALTERATIONS BY LOCATION
+          br
+          span.bold AT PAKENHAM EAST
+          br
+          for trip in trips.trips
+            -
+              let time
+              if (trip.direction === 'Up') time = trip.stopTimings[0].departureTime
+              else time = trip.stopTimings.slice(-1)[0].departureTime
+
+            span #{time} #{trip.direction === 'Up' ? 'Up' : 'arr'} #{trip.direction === 'Up' ? 'PKE' : 'FSS'} 
+              | (No. #{trip.runID}) additional will be #{trip.direction === 'Up' ? 'ON' : 'OFF'} 7 Cars HCMT, SDG.
+            br
+      div.ack
+        p All concerned to note and arrange.
+        h4 Dan Andrews
+        h4 Premier
