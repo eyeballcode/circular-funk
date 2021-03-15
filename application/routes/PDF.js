@@ -22,4 +22,22 @@ router.get('/', async (req, res) => {
   }
 })
 
+router.get('/hcmt', async (req, res) => {
+  let browser
+  try {
+    browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']})
+    let page = await browser.newPage()
+
+    await page.goto('http://localhost:' + config.httpPort + '/hcmt', { waitUntil: 'networkidle0' })
+    let buffer = await page.pdf({format: 'A4', printBackground: true})
+
+    res.header('Content-Type', 'application/pdf')
+    res.end(buffer)
+  } finally {
+    if (browser) {
+      await browser.close()
+    }
+  }
+})
+
 module.exports = router
