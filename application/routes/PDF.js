@@ -30,8 +30,10 @@ router.get('/hcmt', async (req, res) => {
 
     await page.goto('http://localhost:' + config.httpPort + '/hcmt', { waitUntil: 'networkidle0' })
     let buffer = await page.pdf({format: 'A4', printBackground: true})
+    let circularNumber = await page.$eval('title', el => el.textContent)
 
     res.header('Content-Type', 'application/pdf')
+    res.header('Content-Disposition', `attachment; filename="${circularNumber}.pdf"`)
     res.end(buffer)
   } finally {
     if (browser) {
