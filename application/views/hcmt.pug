@@ -138,12 +138,17 @@ html
           br
           for trip in trips.trips
             -
-              let time
-              if (trip.direction === 'Up') time = trip.stopTimings[0].departureTime
-              else time = trip.stopTimings.slice(-1)[0].departureTime
+              let time, isNextDay = false
+              if (trip.direction === 'Up') {
+                time = trip.stopTimings[0].departureTime
+                isNextDay = trip.stopTimings[0].departureTimeMinutes >= 1440
+              } else {
+                time = trip.stopTimings.slice(-1)[0].departureTime
+                isNextDay = trip.stopTimings.slice(-1)[0].departureTimeMinutes >= 1440
+              }
 
             span #{time} #{trip.direction === 'Up' ? 'Up' : 'arr'} #{trip.direction === 'Up' ? 'PKE' : 'FSS'} 
-              | (No. #{trip.runID}) additional will be #{trip.direction === 'Up' ? 'ON' : 'OFF'} 7 Cars HCMT, SDG.
+              | (No. #{trip.runID})#{isNextDay ? ', NEXT DAY,' : ''} additional will #{trip.direction === 'Up' ? 'be ON' : 'go OFF'} 7 Cars HCMT, SDG.
             br
       div.ack
         p All concerned to note and arrange.
