@@ -66,7 +66,10 @@ html
                   td(class=`left wide ${shouldBold ? 'bold' : ''}`) Platform No.
                   td
                   for stop in stopData
-                    td.greyLeft #{isNaN(stop.platform) ? '' : 'PL'} #{stop.platform}
+                    if stop
+                      td.greyLeft #{isNaN(stop.platform) ? '' : 'PL'} #{stop.platform}
+                    else
+                      td.greyLeft ...
 
               if trackBefore.includes(stopName) && dir === 'UP' || trackAfter.includes(stopName) && dir === 'DOWN'
                 - hasShownTrack = true
@@ -76,7 +79,10 @@ html
                 td(class=`left wide ${shouldBold ? 'bold' : ''}`) #{caps.includes(stopName) ? stopName.toUpperCase() : stopName}
                 td.stopType #{stopType}
                 for stop in stopData
-                  td.greyLeft.timing #{stop.departureTime}#{stop.express ? '*' : ''}
+                  if stop
+                    td.greyLeft.timing #{stop.departureTime}#{stop.express ? '*' : ''}
+                  else
+                    td.greyLeft.timing ...
                   
               if !hasShownTrack
                 +track((hasLine && showBottomLine) ? 'greyBottom' : '')

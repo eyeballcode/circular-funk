@@ -40,6 +40,16 @@ let abbreviations = {
   'Pakenham East': 'PKE'
 }
 
+let dngPKMTimes = [
+  { stopName: 'Hallam', minutes: 5 },
+  { stopName: 'Narre Warren', minutes: 3 },
+  { stopName: 'Berwick', minutes: 4 },
+  { stopName: 'Beaconsfield', minutes: 3 },
+  { stopName: 'Officer', minutes: 4 },
+  { stopName: 'Cardinia Road', minutes: 3 },
+  { stopName: 'Pakenham', minutes: 5 }
+]
+
 router.get('/', async  (req, res) => {
   let writtenAt = moment().add(-31 + 7 * (Math.random() - 0.5), 'days')
   let startOfYear = writtenAt.clone().startOf('year')
@@ -90,6 +100,28 @@ router.get('/', async  (req, res) => {
 
     pkm.track = 'S'
 
+    if (!getStop(upTrip, 'Yarraman')) {
+      let dng = getStop(upTrip, 'Dandenong')
+      upTrip.stopTimings.push({
+        stopName: 'Yarraman Railway Station',
+        departureTime: getHHMMFromMinutesPastMidnight(dng.departureTimeMinutes + 3),
+        departureTimeMinutes: dng.departureTimeMinutes + 3,
+        platform: '1',
+        express: true
+      })
+    }
+
+    if (!getStop(upTrip, 'Westall')) {
+      let spg = getStop(upTrip, 'Springvale')
+      upTrip.stopTimings.push({
+        stopName: 'Westall Railway Station',
+        departureTime: getHHMMFromMinutesPastMidnight(spg.departureTimeMinutes + 3),
+        departureTimeMinutes: spg.departureTimeMinutes + 3,
+        platform: '1',
+        express: true
+      })
+    }
+
     let cfd = getStop(upTrip, 'Caulfield')
     let syr = getStop(upTrip, 'South Yarra')
     let rmd = getStop(upTrip, 'Richmond')
@@ -116,6 +148,27 @@ router.get('/', async  (req, res) => {
 
   downTrips.forEach(downTrip => {
     let pkm = getStop(downTrip, 'Pakenham')
+
+    if (!pkm) {
+      let dng = getStop(downTrip, 'Dandenong')
+      let previousStop = dng
+
+      dngPKMTimes.forEach(stop => {
+        let newStop = {
+          stopName: stop.stopName + ' Railway Station',
+          departureTime: getHHMMFromMinutesPastMidnight(previousStop.departureTimeMinutes + stop.minutes),
+          departureTimeMinutes: previousStop.departureTimeMinutes + stop.minutes,
+          platform: '2',
+          express: true
+        }
+
+        downTrip.stopTimings.push(newStop)
+        previousStop = newStop
+      })
+
+      pkm = previousStop
+    }
+
     let pke = {
       stopName: 'Pakenham East Railway Station',
       departureTime: getHHMMFromMinutesPastMidnight(pkm.departureTimeMinutes + 5),
